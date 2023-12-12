@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý ứng dụng</title>
+    <style>
+        body {
+    background-color: #282a36;
+    color: #8be9fd;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#app-form {
+    margin-bottom: 20px;
+}
+
+#app-form input[type="text"] {
+    padding: 5px;
+    width: 300px;
+}
+
+#app-form button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#app-list li {
+    margin-bottom: 10px;
+}
+
+#app-list button {
+    margin-left: 10px;
+    color: #ff79c6;
+}
+    </style>
+</head>
+<body>
+    <h1>Quản lý ứng dụng</h1>
+
+    <form id="app-form">
+        <input type="text" id="app-name" placeholder="Nhập tên ứng dụng">
+        <button type="submit">Thêm</button>
+    </form>
+    
+    <ul id="app-list"></ul>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+    const form = document.getElementById('app-form');
+    const appNameInput = document.getElementById('app-name');
+    const appList = document.getElementById('app-list');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const appName = appNameInput.value;
+        if (appName) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${appName}</span>
+                <button class="edit">Chỉnh sửa</button>
+                <button class="delete">Xóa</button>
+            `;
+            appList.appendChild(li);
+
+            appNameInput.value = "";
+        }
+    });
+
+    appList.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.classList.contains('edit')) {
+            const li = target.closest('li');
+            const appName = li.getElementsByTagName('span')[0].innerText;
+            const newAppName = prompt('Nhập tên mới cho ứng dụng', appName);
+            if (newAppName) {
+                li.getElementsByTagName('span')[0].innerText = newAppName;
+            }
+        } else if (target.classList.contains('delete')) {
+            const li = target.closest('li');
+            li.remove();
+        }
+    });
+});
+    </script>
+</body>
+</html>
